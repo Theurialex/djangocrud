@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from crudProject1.models import Student
 from crudProject1.forms import StudentForm
+from crudProject1.models import Student
 
 
 # Create your views here.
@@ -13,31 +13,32 @@ def index(request):
                 return redirect('/show')
             except:
                 pass
-        else:
-            form = StudentForm()
-            return render(request, 'index.html', {'form': form})
+    else:
+        form = StudentForm()
+        return render(request, 'index.html', {'form': form})
 
 
 def show(request):
-    Student = student.objects.all()
-    return render(request, 'show.html', {'student': Student})
+    student = Student.objects.all()
+    return render(request, 'show.html', {'student': student})
 
 
 def edit(request, id):
-    Student = Student.objects.get(id=id)
-    return render(request, 'edit.html', {'student': Student})
+    student = Student.objects.get(id=id)
+    return render(request, 'edit.html', {'student': student})
 
 
 def delete(request, id):
-    Student = Student.objects.get(id=id)
+    student = Student.objects.get(id=id)
+    student.delete()
     return redirect('/show')
 
 
 def update(request, id):
-    Student = Student.objects.get(id=id)
-    form = StudentForm(request.POST, instance=Student)
+    student = Student.objects.get(id=id)
+    form = StudentForm(request.POST, instance=student)
     if form.is_valid():
         form.save()
         return redirect('/show')
     else:
-        return render(request, 'edit.html', {'student': Student})
+        return render(request, 'edit.html', {'student': student})

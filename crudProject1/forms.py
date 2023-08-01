@@ -1,8 +1,8 @@
 from django import forms
-from crudProject1.models import Students
+from crudProject1.models import Student
 
 
 class StudentForm(forms.ModelForm):
     class Meta:
-        model = Students
+        model = Student
         fields = ['firstname', 'lastname', 'email']
